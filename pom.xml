@@ -17,17 +17,23 @@
   <description>SOALab2</description>
   <properties>
     <java.version>1.8</java.version>
+      <consul-client.version>1.5.3</consul-client.version>
   </properties>
   <dependencies>
-<!--    <dependency>-->
-<!--      <groupId>org.springframework.boot</groupId>-->
-<!--      <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-<!--      <version>2.2.5.RELEASE</version>-->
-<!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>org.springframework.boot</groupId>-->
+    <!--      <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+    <!--      <version>2.2.5.RELEASE</version>-->
+    <!--    </dependency>-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-jetty</artifactId>
     </dependency>
+      <dependency>
+          <groupId>com.orbitz.consul</groupId>
+          <artifactId>consul-client</artifactId>
+          <version>${consul-client.version}</version>
+      </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -64,6 +70,25 @@
       <artifactId>jackson-datatype-joda</artifactId>
       <version>2.2.1</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.springframework.ws/spring-ws-core -->
+    <dependency>
+      <groupId>org.springframework.ws</groupId>
+      <artifactId>spring-ws-core</artifactId>
+      <version>3.1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>wsdl4j</groupId>
+      <artifactId>wsdl4j</artifactId>
+    </dependency>
+
+
+    <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.17.1</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -78,6 +103,24 @@
         <configuration>
           <jettyXml>src/main/webapp/jetty.xml,src/main/webapp/jetty-
             ssl.xml,src/main/webapp/jetty-https.xml,src/main/webapp/jetty-ssl-context.xml</jettyXml>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jaxb2-maven-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <id>xjc</id>
+            <goals>
+              <goal>xjc</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <schemaDirectory>${project.basedir}/src/main/resources/</schemaDirectory>
+          <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+          <clearOutputDir>false</clearOutputDir>
         </configuration>
       </plugin>
     </plugins>

@@ -3,6 +3,9 @@ package itmo.soalab2.repository;
 import itmo.soalab2.model.VehicleDto;
 import java.util.List;
 import java.util.Objects;
+
+import itmo.soalab2.worker.ServiceDiscoveryWorker;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class VehicleRepository {
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private String BASE_URL = "https://localhost:8444/SOALab1-1.0-SNAPSHOT/api/vehicle";
+    private final String BASE_URL = ServiceDiscoveryWorker.getUriFromConsul() + "/api/vehicle";
 
     public List<VehicleDto> getVehicle() {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(BASE_URL);
